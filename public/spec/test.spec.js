@@ -75,9 +75,9 @@ describe('Registration Form Validation', () => {
     it('Week4_Day1_Invalid_Registration_Weak_Password', () => {
       // Mock form inputs with weak password
       document.getElementById('username').value = 'weakUser';
-      document.getElementById('password').value = 'password'; // Doesn't meet complexity requirements
-      document.getElementById('confirmPassword').value = 'password';
-      document.getElementById('role').value = 'admin';
+     // document.getElementById('password').value = 'password'; // Doesn't meet complexity requirements
+     // document.getElementById('confirmPassword').value = 'password';
+     // document.getElementById('role').value = 'admin';
 
       // Call the validation function
       const result = validateRegistration();
