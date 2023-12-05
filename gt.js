@@ -1,6 +1,24 @@
 const { JSDOM } = require('jsdom');
 const { validateRegistration } = require('../registrationValidation'); // Update the path accordingly
 
+class CustomReporter {
+    constructor() {
+        this.passText = 'Passed';
+        this.failText = 'Failed';
+    }
+ 
+    specDone(result) {
+        if (result.status === 'passed') {
+            process.stdout.write(`${result.description}:${this.passText}\n`);
+        } else if (result.status === 'failed') {
+            process.stdout.write(`${result.description}:${this.failText}\n`);
+        }
+    }
+}
+ 
+jasmine.getEnv().clearReporters();
+jasmine.getEnv().addReporter(new CustomReporter());
+
 describe('Registration Form Validation', () => {
     let dom;
 
