@@ -73,7 +73,7 @@ describe('Registration Form Validation', () => {
     });
 
     it('Week4_Day1_Invalid_Registration_Weak_Password', () => {
-       Mock form inputs with weak password
+     //  Mock form inputs with weak password
       document.getElementById('username').value = 'weakUser';
       document.getElementById('password').value = 'password'; // Doesn't meet complexity requirements
       document.getElementById('confirmPassword').value = 'password';
@@ -83,8 +83,8 @@ describe('Registration Form Validation', () => {
       const result = validateRegistration();
 
       // Assertions
-     // expect(result).toBe(false);
-// expect(document.getElementById('passwordValidation').textContent).toBe('Password must be at least 8 characters long and contain both letters and numbers');
+      expect(result).toBe(false);
+ expect(document.getElementById('passwordValidation').textContent).toBe('Password must be at least 8 characters long and contain both letters and numbers');
   });
 
   it('Week4_Day1_Invalid_Registration_Password_does_not_match', () => {
