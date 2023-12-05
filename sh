@@ -3,6 +3,6 @@ cp /home/coder/project/workspace/jasmine/test/* /home/coder/project/workspace/pu
 # cp /home/coder/project/workspace/react/tests/* /home/coder/project/workspace/reactapp/src/tests/;
 cd /home/coder/project/workspace/public/;
 source /usr/local/nvm/nvm.sh
-nvm use 14
+nvm use 18
 npm i
 npm test

@@ -1,6 +1,24 @@
 const { JSDOM } = require('jsdom');
 const { validateRegistration } = require('../registrationValidation'); // Update the path accordingly
 
+class CustomReporter {
+    constructor() {
+        this.passText = 'Passed';
+        this.failText = 'Failed';
+    }
+ 
+    specDone(result) {
+        if (result.status === 'passed') {
+            process.stdout.write(`${result.description}:${this.passText}\n`);
+        } else if (result.status === 'failed') {
+            process.stdout.write(`${result.description}:${this.failText}\n`);
+        }
+    }
+}
+ 
+jasmine.getEnv().clearReporters();
+jasmine.getEnv().addReporter(new CustomReporter());
+
 describe('Registration Form Validation', () => {
     let dom;
 
@@ -10,21 +28,21 @@ describe('Registration Form Validation', () => {
         <h1>Registration</h1>
         <form id="registrationForm" onsubmit="return validateRegistration();" method="post">
             <input type="text" id="username" name="username" required>
-            
+
             <input type="password" id="password" name="password" required>
             <span id="passwordValidation" class="validation-message"></span>
-            
+
             <input type="password" id="confirmPassword" name="confirmPassword" required>
             <span id="passwordValidation1" class="validation-message"></span>
 
-            
+
             <label for="role">Role:</label>
             <select id="role" name="role" required>
                 <option value="" disabled selected>Select role</option>
                 <option value="admin">Admin</option>
                 <option value="organizer">Organizer</option>
             </select>
-            
+
             <input type="submit" value="Register">
         </form>
     </div>
@@ -54,37 +72,37 @@ describe('Registration Form Validation', () => {
         delete global.localStorage;
     });
 
-    it('Week4_DAy1_Invalid_Registration_Weak_Password', () => {
+    it('Week4_Day1_Invalid_Registration_Weak_Password', () => {
       // Mock form inputs with weak password
       document.getElementById('username').value = 'weakUser';
       document.getElementById('password').value = 'password'; // Doesn't meet complexity requirements
       document.getElementById('confirmPassword').value = 'password';
       document.getElementById('role').value = 'admin';
-  
+
       // Call the validation function
       const result = validateRegistration();
-  
+
       // Assertions
       expect(result).toBe(false);
       expect(document.getElementById('passwordValidation').textContent).toBe('Password must be at least 8 characters long and contain both letters and numbers');
   });
 
-  it('Week4_DAy1_Invalid_Registration_Password_does_notPmatch', () => {
+  it('Week4_Day1_Invalid_Registration_Password_does_not_match', () => {
     // Mock form inputs with weak password
     document.getElementById('username').value = 'weakUser';
     document.getElementById('password').value = 'password1'; // Doesn't meet complexity requirements
     document.getElementById('confirmPassword').value = 'password2';
     document.getElementById('role').value = 'admin';
-  
+
     // Call the validation function
     const result = validateRegistration();
-  
+
     // Assertions
     expect(result).toBe(false);
     expect(document.getElementById('passwordValidation').textContent).toBe('Passwords do not match');
   });
 
-  
+
 
   it('Week4_Day1_should_register_for_valid_registration_data', () => {
     // Mock form inputs with valid registration data
@@ -152,10 +170,10 @@ describe('Login Form Validation', () => {
       <form id="loginForm" onsubmit="return validateLogin();" method="post">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required>
-          
+
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required>
-          
+
           <input type="submit" value="Login">
       </form>
   </div>
@@ -229,7 +247,7 @@ describe('Login Form Validation', () => {
     expect(location.href).toBe('home.html');
 });
 
-  it('Week4_Day1_Invalid_User_Login', () => {
+  it('Week4_Day2_Invalid_User_Login', () => {
         // Mock form inputs for an invalid user
         document.getElementById('username').value = 'invalidUser';
         document.getElementById('password').value = 'InvalidPassword';
